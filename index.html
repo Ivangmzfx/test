@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Vieja Aceitera</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .descripcion {
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: white;
+        }
+        .talleres h2{
+            color: #667eea;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Talleres Section */
+        .talleres {
+            background: #f8f9fa;
+        }
+
+        .talleres-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .taller-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .taller-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .taller-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .taller-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .taller-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .ver-horarios-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .ver-horarios-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .taller-horario {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            margin-top: 0;
+        }
+
+        .taller-horario.active {
+            max-height: 500px;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .taller-horario h4 {
+            color: #667eea;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .horario-dia-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .horario-dia-item strong {
+            color: #333;
+        }
+
+        .horario-dia-item span {
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .btn-unirse {
+            display: inline-block;
+            margin-top: 10px; 
+            margin-left: 10px;
+            margin-bottom: 5px;
+            padding: 0.8rem 0.8rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-unirse:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Eventos Section */
+        .eventos {
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .eventos-calendario {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .evento-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .evento-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .evento-fecha {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .evento-dia {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .evento-mes {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .evento-info {
+            padding: 1.5rem;
+        }
+
+        .evento-info h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .evento-detalle {
+            color: #666;
+            margin: 0.5rem 0;
+        }
+
+        .evento-detalle strong {
+            color: #333;
+        }
+
+        /* Cuenta Regresiva */
+        .countdown-container {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 70px;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-item {
+            margin: 1rem 2;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-item strong {
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: end;
+        }    
+        .copyright {
+            text-align: start;
+            font-style: oblique;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .countdown {
+                gap: 0.5rem;
+            }
+            
+            .countdown-item {
+                min-width: 60px;
+                padding: 0.8rem 0.5rem;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        .boton {
+            display: inline-flexbox;
+            background: #8b0000;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1rem;
+            border-radius: 100px;
+            border: none;
+            font-weight: 600;
+            width: 150px;
+            height: 70px;
+            font-size: auto;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: #333 0 10px 5px;
+        }
+
+        .boton:hover {
+            background: #8b0000;
+            filter: saturate(25%);
+            box-shadow: #333 0 5px 5px;
+            transform: scale(0.95);
+            transform: translateY(4px);
+            transition: ease-out;
+        }
+
+        .boton:active {
+            box-shadow: #333 0 2.05px 5px;
+            transition: ease-out;
+        }
+
+        .whatsapp {
+            display: inline-flex;
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            gap: 8px;
+            justify-content: center;
+        }
+        .whatsapp :hover{
+            color: #00bfff;
+            transform: scale(120%);
+        }
+        .maps {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        text-align: center;
+        transition: color 0.3s, transform 0.3s;
+        }
+
+        .maps:hover {
+        color: #00ff9d;
+        transform: scale(1.05);
+        }
+
+        .Redes{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;            
+        }
+        .Redes :hover{
+            transform: scale(130%);
+            transition: ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🎭 La Vieja Aceitera</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#talleres">Talleres</a></li>
+                <li><a href="#eventos">Eventos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="https://ivangmzfx.github.io/Formulario/">Asociate</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>La Vieja Aceitera</h1>
+            <p><strong>Comunitario en Diamante, Entre Ríos</strong></p>
+            <p class="descripcion">Espacio cultural comunitario y asociación civil que está recuperando un lugar con historia en Diamante. Un punto de encuentro para todas las edades, donde la cultura y el aprendizaje se encuentran.</p>
+            <div><button class="boton" onclick="window.open('https://ivangmzfx.github.io/Formulario/', '_blank')">Asociate aca</button></div>
+        </div>
+    </section>
+
+    <section id="talleres" class="talleres">
+        <h2>Nuestros Talleres</h2>
+        <div class="talleres-grid">
+            <div class="taller-card">
+                <div class="taller-icon">📚</div>
+                <h3>Acompañamiento al Estudio</h3>
+                <p>Apoyo escolar para todas las edades. Te ayudamos con tus tareas y estudios en un ambiente colaborativo y amigable.</p>
+                <button class="ver-horarios-btn" onclick="toggleHorario(this)">Ver horarios 📅</button>
+                <div class="taller-horario">
+                    <h4>📅 Horarios:</h4>
+                    <div class="horario-dia-item">
+                        <strong>Martes:</strong>
+                        <span>18:00</span>
+                    </div>
+                    <a href="#contacto" class="btn-unirse">¡Quiero unirme!</a>
+                </div>
+            </div>
+
+            <div class="taller-card">
+                <div class="taller-icon">🎨</div>
+                <h3>Arte</h3>
+                <p>Explorá tu creatividad con diferentes técnicas artísticas: pintura, dibujo, y mucho más. Un espacio para expresarte libremente.</p>
+                <button class="ver-horarios-btn" onclick="toggleHorario(this)">Ver horarios 📅</button>
+                <div class="taller-horario">
+                    <h4>📅 Horarios:</h4>
+                    <div class="horario-dia-item">
+                        <strong>Jueves:</strong>
+                        <span>18:00</span>
+                    </div>
+                    <a href="#contacto" class="btn-unirse">¡Quiero unirme!</a>
+                </div>
+            </div>
+
+            <div class="taller-card">
+                <div class="taller-icon">🥁</div>
+                <h3>Batucada - Comparsa Amigachitos</h3>
+                <p>¡Sentí el ritmo! Nuestra comparsa de batucada te invita a ser parte de la música, el movimiento y la alegría colectiva.</p>
+                <button class="ver-horarios-btn" onclick="toggleHorario(this)">Ver horarios 📅</button>
+                <div class="taller-horario">
+                    <h4>📅 Horarios:</h4>
+                    <div class="horario-dia-item">
+                        <strong>Lunes:</strong>
+                        <span>18:30</span>
+                    </div><div class="horario-dia-item">
+                        <strong>Martes:</strong>
+                        <span>18:30</span>
+                    </div><div class="horario-dia-item">
+                        <strong>Miércoles:</strong>
+                        <span>18:30</span>
+                    </div><div class="horario-dia-item">
+                        <strong>Viernes:</strong>
+                        <span>18:30</span>
+                    </div>
+                    <a href="#contacto" class="btn-unirse">¡Quiero unirme!</a>
+                </div>
+            </div>
+
+            <div class="taller-card">
+                <div class="taller-icon">🥋</div>
+                <h3>Artes Marciales</h3>
+                <p>Karate para desarrollar disciplina, respeto y fortaleza física y mental. Apto para todas las edades.</p>
+                <button class="ver-horarios-btn" onclick="toggleHorario(this)">Ver horarios 📅</button>
+                <div class="taller-horario">
+                    <h4>📅 Horarios:</h4>
+                    <div class="horario-dia-item">
+                        <strong>Miercoles:</strong>
+                        <span>19:15</span>
+                    </div>
+                    <a href="#contacto" class="btn-unirse">¡Quiero unirme!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+<!--Activar"block"-Desactivar"none"-->
+    <section id="eventos" class="eventos" style="display: block;">
+        <div class="eventos-calendario">
+            <div class="evento-card">
+                <div class="evento-fecha">
+                    <div class="evento-dia">24</div>
+                    <div class="evento-mes">Diciembre</div>
+                  </div>
+                <div class="evento-info">
+                    <h3>Navidad</h3>
+                    <p class="evento-detalle"><strong>⏰ 00:00</strong> [Horario]</p>
+                    <p class="evento-detalle"><strong>📍 Lugar:</strong> Mundial</p>                    
+                    <!-- CUENTA REGRESIVA -->
+                    <div class="countdown-container">
+                        <h4 style="color: #667eea; margin: 1rem 0 0.5rem 0;">⏳ Faltan:</h4>
+                        <div class="countdown" id="countdown-1">
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="days-1">00</span>
+                                <span class="countdown-label">Días</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="hours-1">00</span>
+                                <span class="countdown-label">Horas</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="minutes-1">00</span>
+                                <span class="countdown-label">Min</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="seconds-1">00</span>
+                                <span class="countdown-label">Seg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="contact-content">
+            <p>¿Te interesa sumarte a nuestros talleres o querés más información?</p>
+            <div class="contact-info">
+                <h2>Contactanos</h2>
+
+                <div class="contact-item">
+                   <strong>Dirección:</strong>
+                    <a class="maps" href="https://www.google.com/maps/dir//La+Vieja+Aceitera,+C.+Chajarí+520,+E3101+Strobel,+Entre+Ríos/@-32.0508956,-60.6254106,15z/data=!4m17!1m7!3m6!1s0x95b5cd6a9a32146f:0xc7eb9ab1517502cf!2sLa+Vieja+Aceitera!8m2!3d-32.050896!4d-60.6151108!16s%2Fg%2F11t5vbr81r!4m8!1m0!1m5!1m1!1s0x95b5cd6a9a32146f:0xc7eb9ab1517502cf!2m2!1d-60.6151108!2d-32.050896!3e0?entry=ttu&g_ep=EgoyMDI1MTAxMy4wIKXMDSoASAFQAw%3D%3D"target="_blank">
+                     🏢 Uruguay C. Chajarí 520, E3101 Strobel, Entre Ríos <br>
+                     La Vieja Aceitera</a></div>
+
+                <div class="contact-item">
+                    <strong>Teléfono:</strong>
+                    <a class="whatsapp" onclick="window.open('https://wa.me/543435001749', '_blank')"><p>📱+54 9 343 500-1749</p></a>
+                </div>
+
+                <div class="contact-item">
+                    <strong>Email:</strong>
+                    <span>📨mariagaramirez20011@gmail.com</span>
+                </div>
+
+                <div class="contact-item">
+                    <strong>Redes Sociales:</strong>
+                    <div class="Redes">
+                    <a href="https://www.facebook.com/AmigachitosMurgaInfantil" target="_blank" title="Facebook">
+                    <img src="facebook.png" width="30" height="auto"></a>
+                    <a href="https://www.instagram.com/amigachitos1/" target="_blank" title="Instagram">
+                    <img src="instagam.png" width="30" height="auto"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="copyright">&copy; 2025 ivangmzfx La Vieja Aceitera - Strobel, Entre Ríos</p>
+        <p>Asociación Civil</p>
+    </footer>
+
+    <script>
+        // CUENTA REGRESIVA - CAMBIÁ LA FECHA DEL EVENTO AQUÍ
+        // Formato: new Date("AÑO-MES-DIA HORA:MINUTOS:SEGUNDOS")
+        const evento1Date = new Date("2025-12-24 12:00:00").getTime();
+
+        function startCountdown(eventDate, countdownId) {
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = eventDate - now;
+
+                if (distance < 0) {
+                    document.getElementById('days-1').textContent = '00';
+                    document.getElementById('hours-1').textContent = '00';
+                    document.getElementById('minutes-1').textContent = '00';
+                    document.getElementById('seconds-1').textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days-1').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours-1').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes-1').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds-1').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        startCountdown(evento1Date, 'countdown-1');
+
+        // Toggle horarios en talleres
+        function toggleHorario(button) {
+            const horarioDiv = button.nextElementSibling;
+            const isActive = horarioDiv.classList.contains('active');
+            
+            if (isActive) {
+                horarioDiv.classList.remove('active');
+                button.textContent = 'Ver horarios 📅';
+            } else {
+                horarioDiv.classList.add('active');
+                button.textContent = 'Ocultar horarios 📅';
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.taller-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
