@@ -22,7 +22,7 @@
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 1rem 0;
+            padding: 1px 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -40,8 +40,10 @@
         }
 
         .logo {
-            font-size: 2rem;
+            font-size: 1rem;
             font-weight: bold;
+            padding: 0;
+            white-space: nowrap;
         }
 
         .nav-links {
@@ -95,7 +97,8 @@
             position: relative;
             z-index: 1;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0 20px auto;
+            padding: 0 10px;
         }
 
         .hero h1 {
@@ -537,8 +540,8 @@
 <body>
     <header>
         <nav>
-            <div class="logo">🎭 La Vieja Aceitera</div>
             <ul class="nav-links">
+                <p class="logo">🎉La Vieja Aceitera</p>
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#talleres">Talleres</a></li>
                 <li><a href="#eventos">Eventos</a></li>
@@ -551,8 +554,8 @@
     <section id="inicio" class="hero">
         <div class="hero-content">
             <h1>La Vieja Aceitera</h1>
-            <p><strong>Comunitario en Diamante, Entre Ríos</strong></p>
-            <p class="descripcion">Espacio cultural comunitario y asociación civil que está recuperando un lugar con historia en Diamante. Un punto de encuentro para todas las edades, donde la cultura y el aprendizaje se encuentran.</p>
+            <p><strong>Comunitario en Diamante, ER</strong></p>
+            <p class="descripcion">Espacio cultural comunitario y asociación civil que está recuperando un lugar con historia en Strobel. Un punto de encuentro para todas las edades, donde la cultura y el aprendizaje se encuentran. Murga infantil y juvenil.</p>
             <div><button class="boton" onclick="window.open('https://ivangmzfx.github.io/Formulario/', '_blank')">Asociate aca</button></div>
         </div>
     </section>
@@ -592,7 +595,7 @@
 
             <div class="taller-card">
                 <div class="taller-icon">🥁</div>
-                <h3>Batucada - Comparsa Amigachitos</h3>
+                <h3>Batucada - Murga Amigachitos</h3>
                 <p>¡Sentí el ritmo! Nuestra comparsa de batucada te invita a ser parte de la música, el movimiento y la alegría colectiva.</p>
                 <button class="ver-horarios-btn" onclick="toggleHorario(this)">Ver horarios 📅</button>
                 <div class="taller-horario">
